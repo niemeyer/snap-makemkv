@@ -1,0 +1,32 @@
+name: makemkv
+version: 1.9.10
+summary: Video disk ripping tool
+description: |
+        MakeMKV allows building .mkv files out of video discs.
+
+apps:
+        makemkv:
+                command: launch makemkv
+                plugs: [unity7]
+
+parts:
+        launch:
+                plugin: copy
+                files:
+                        launch: usr/bin/launch
+                build-packages:
+                        - qtbase5-dev
+                stage-packages:
+                        - libqt5gui5
+        
+        makemkv-bin:
+                plugin: make
+                source: http://www.makemkv.com/download/makemkv-bin-1.9.10.tar.gz
+
+        makemkv-oss:
+                plugin: autotools
+                source: http://www.makemkv.com/download/makemkv-oss-1.9.10.tar.gz
+                organize:
+                        bin: usr/bin
+                after:
+                        - makemkv-bin
